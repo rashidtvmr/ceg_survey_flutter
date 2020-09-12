@@ -21,9 +21,10 @@ class _SettingsPageState extends State<SettingsPage> {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (_) => LoginPage()));
     } else if (pageName == 'signup') {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => SignupPage()));
+      Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpPage()));
     } else if (pageName == 'notification') {
-      Navigator.push(context, MaterialPageRoute(builder: (_) => SignupPage()));
+      Navigator.push(context,
+          MaterialPageRoute(builder: (_) => NotificationSettingPage()));
     } else if (pageName == 'help') {
       Navigator.push(context, MaterialPageRoute(builder: (_) => HelpPage()));
     } else if (pageName == 'about') {

@@ -18,16 +18,28 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
   int _currentIndex = 0;
+  PageController _controller = PageController(
+    initialPage: 0,
+  );
+  void pageChanged(index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     BottomNavigationBar customNavigationBar = new BottomNavigationBar(
       // backgroundColor: Colors.transparent,
       currentIndex: _currentIndex,
-      elevation: 2,
+      elevation: 10,
       selectedItemColor: Colors.blue,
       showSelectedLabels: false,
       showUnselectedLabels: false,
@@ -99,8 +111,9 @@ class _MainPageState extends State<MainPage> {
     return WillPopScope(
       onWillPop: _onBackButtonPress,
       child: Scaffold(
-          body: IndexedStack(
-            index: _currentIndex,
+          body: PageView(
+            onPageChanged: pageChanged,
+            controller: _controller,
             children: [
               HomePage(),
               SearchPage(),
@@ -130,6 +143,8 @@ class _MainPageState extends State<MainPage> {
     //     navigatorKey.currentState.pushNamed("Home");
     // }
     setState(() {
+      print(tabIndex);
+      _controller.jumpToPage(tabIndex);
       _currentIndex = tabIndex;
     });
   }
