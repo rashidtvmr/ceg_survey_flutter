@@ -1,6 +1,8 @@
 import 'package:Survey_App/models/typography.dart';
 import 'package:flutter/material.dart';
 
+enum IssueType { issue, feature }
+
 class HelpPage extends StatefulWidget {
   HelpPage({Key key}) : super(key: key);
 
@@ -9,6 +11,8 @@ class HelpPage extends StatefulWidget {
 }
 
 class _HelpPageState extends State<HelpPage> {
+  IssueType _currentType = IssueType.issue;
+
   Widget _generateTextFormField(String fieldLabel, TextInputType type) {
     return Material(
       elevation: 2,
@@ -49,6 +53,7 @@ class _HelpPageState extends State<HelpPage> {
                 Container(
                   child: Text(
                     "If you feel any difficulty using this app reach to us through support@surveyapp.com or if you find any issue or bug or have an idea of feature please create your ticket by submitting below form",
+                    textAlign: TextAlign.justify,
                     style: defaultTextStyle,
                   ),
                 ),
@@ -57,6 +62,50 @@ class _HelpPageState extends State<HelpPage> {
                     defaultHeight,
                     _generateTextFormField(
                         "Issue/Feature Title", TextInputType.text),
+                    Row(
+                      children: [
+                        Radio(
+                          value: IssueType.issue,
+                          groupValue: _currentType,
+                          onChanged: (IssueType value) {
+                            setState(() {
+                              _currentType = value;
+                            });
+                          },
+                        ),
+                        InkWell(
+                          child: Text(
+                            "Issue",
+                            style: defaultTextStyle,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _currentType = IssueType.issue;
+                            });
+                          },
+                        ),
+                        Radio(
+                          value: IssueType.feature,
+                          groupValue: _currentType,
+                          onChanged: (IssueType value) {
+                            setState(() {
+                              _currentType = value;
+                            });
+                          },
+                        ),
+                        InkWell(
+                          child: Text(
+                            "Feature",
+                            style: defaultTextStyle,
+                          ),
+                          onTap: () {
+                            setState(() {
+                              _currentType = IssueType.feature;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                     Container(
                       height: 10,
                     ),

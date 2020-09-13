@@ -152,10 +152,33 @@ class _MainPageState extends State<MainPage> {
   Future<bool> _onBackButtonPress() async {
     if (_currentIndex != 0) {
       setState(() {
+        _controller.jumpTo(0);
         _currentIndex = 0;
       });
     } else {
-      SystemNavigator.pop();
+      print("exiting...");
+      showDialog(
+        context: context,
+        child: AlertDialog(
+          title: Text("Do you want to exit?"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          actions: [
+            FlatButton(
+              child: Text("No"),
+              onPressed: () => {Navigator.of(context).pop()},
+            ),
+            RaisedButton(
+              color: primary,
+              child: Text("Yes"),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              onPressed: () => SystemNavigator.pop(),
+            ),
+          ],
+        ),
+      );
+      // SystemNavigator.pop();
     }
   }
 

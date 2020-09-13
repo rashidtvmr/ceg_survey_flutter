@@ -25,7 +25,7 @@ class _NotificationPageState extends State<NotificationPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("No new notification"),
-              Icon(Icons.sentiment_very_dissatisfied)
+              Icon(Icons.sentiment_dissatisfied)
             ],
           )
         ],

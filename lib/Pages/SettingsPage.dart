@@ -1,3 +1,6 @@
+import 'package:provider/provider.dart';
+
+import 'package:Survey_App/models/app.dart';
 // import 'package:Survey_App/Pages/HomePage.dart';
 import 'package:Survey_App/Pages/LoginPage.dart';
 import 'package:Survey_App/Pages/SingupPage.dart';
@@ -35,94 +38,103 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-        child: Column(
-          children: [
-            defaultHeight,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircleAvatar(
-                  child: Icon(
-                    Icons.supervised_user_circle,
-                    size: 100,
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+          child: Column(
+            children: [
+              defaultHeight,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircleAvatar(
+                    child: Icon(
+                      Icons.supervised_user_circle,
+                      size: 100,
+                    ),
+                    // backgroundImage: AssetImage('assets/images/me.jpg'),
+                    maxRadius: 50,
+                  )
+                ],
+              ),
+              defaultHeight,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Guest User',
+                    style: defaultTextStyle,
+                  )
+                ],
+              ),
+              defaultHeight,
+              Row(
+                children: [
+                  Text('Account', style: secondaryTextStyle),
+                ],
+              ),
+              Column(
+                children: [
+                  LargeButton(
+                    "Login",
+                    Icons.person,
+                    () => {goToAnotherPage("login")},
                   ),
-                  // backgroundImage: AssetImage('assets/images/me.jpg'),
-                  maxRadius: 50,
-                )
-              ],
-            ),
-            defaultHeight,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Guest User',
-                  style: defaultTextStyle,
-                )
-              ],
-            ),
-            defaultHeight,
-            Row(
-              children: [
-                Text('Account', style: secondaryTextStyle),
-              ],
-            ),
-            Column(
-              children: [
-                LargeButton(
-                  "Login",
-                  Icons.account_box,
-                  () => {goToAnotherPage("login")},
-                ),
-                LargeButton(
-                  "Signup",
-                  Icons.group_add,
-                  () => {
-                    goToAnotherPage("signup"),
-                  },
-                ),
-              ],
-            ),
-            defaultHeight,
-            Row(
-              children: [
-                Text('General', style: secondaryTextStyle),
-              ],
-            ),
-            Column(
-              children: [
-                LargeButton(
-                  "Notification",
-                  Icons.notifications,
-                  () => {goToAnotherPage("notification")},
-                ),
-              ],
-            ),
-            defaultHeight,
-            Row(
-              children: [
-                Text('Other', style: secondaryTextStyle),
-              ],
-            ),
-            Column(
-              children: [
-                LargeButton(
-                  "Help",
-                  Icons.live_help,
-                  () => {goToAnotherPage("help")},
-                ),
-                LargeButton(
-                  "About US",
-                  Icons.group,
-                  () => {
-                    goToAnotherPage("about"),
-                  },
-                ),
-              ],
-            ),
-          ],
+                  LargeButton(
+                    "Signup",
+                    Icons.person_add,
+                    () => {
+                      goToAnotherPage("signup"),
+                    },
+                  ),
+                ],
+              ),
+              defaultHeight,
+              Row(
+                children: [
+                  Text('General', style: secondaryTextStyle),
+                ],
+              ),
+              Column(
+                children: [
+                  LargeButton(
+                    "Notification",
+                    Icons.notifications,
+                    () => {goToAnotherPage("notification")},
+                  ),
+                ],
+              ),
+              defaultHeight,
+              Row(
+                children: [
+                  Text('Other', style: secondaryTextStyle),
+                ],
+              ),
+              Column(
+                children: [
+                  LargeButton(
+                    "Help",
+                    Icons.live_help,
+                    () => {goToAnotherPage("help")},
+                  ),
+                  LargeButton(
+                    "About US",
+                    Icons.group,
+                    () => {
+                      goToAnotherPage("about"),
+                    },
+                  ),
+                  LargeButton(
+                    "About US",
+                    Icons.group,
+                    () => {
+                      goToAnotherPage("about"),
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

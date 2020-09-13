@@ -1,3 +1,4 @@
+import 'package:Survey_App/widget/ExtraLargeButton.dart';
 import 'package:flutter/material.dart';
 
 import 'package:Survey_App/models/typography.dart';
@@ -83,7 +84,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Container(
+      child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -99,14 +100,34 @@ class _HomePageState extends State<HomePage> {
             ),
             defaultHeight,
             defaultHeight,
-            mainPageButton("Create Survey", Colors.lightBlue, Colors.white,
-                Icons.create, () => {goToAnotherPage("create")}),
-            mainPageButton("Answer Survey", Colors.lightBlue, Colors.white,
-                Icons.sentiment_satisfied, () => {goToAnotherPage("answer")}),
-            mainPageButton("View My Survey", Colors.lightBlue, Colors.white,
-                Icons.history, () => {goToAnotherPage("survey")}),
-            mainPageButton("View My Respose", Colors.lightBlue, Colors.white,
-                Icons.question_answer, () => {goToAnotherPage("response")}),
+            ExtraLargeButton(
+              name: "Create Survey",
+              color: primary,
+              textColor: Colors.white,
+              icon: Icons.create,
+              onTap: () => {goToAnotherPage("create")},
+            ),
+            ExtraLargeButton(
+              name: "Answer Survey",
+              color: primary,
+              textColor: Colors.white,
+              icon: Icons.sentiment_satisfied,
+              onTap: () => {goToAnotherPage("answer")},
+            ),
+            ExtraLargeButton(
+              name: "View My Survey",
+              color: primary,
+              textColor: Colors.white,
+              icon: Icons.history,
+              onTap: () => {goToAnotherPage("survey")},
+            ),
+            ExtraLargeButton(
+              name: "View My Response",
+              color: primary,
+              textColor: Colors.white,
+              icon: Icons.create,
+              onTap: () => {goToAnotherPage("response")},
+            )
           ],
         ),
       ),

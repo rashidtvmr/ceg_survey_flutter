@@ -22,6 +22,8 @@ environment:
 
 dependencies:
   flutter_svg:
+  url_launcher: ^5.5.3
+  dio:
   provider:
   flutter:
     sdk: flutter
