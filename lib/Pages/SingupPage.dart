@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:Survey_App/Pages/LoginPage.dart';
 import 'package:Survey_App/models/typography.dart';
 import 'package:Survey_App/widget/MiniProgressBar.dart';
@@ -16,47 +18,54 @@ class _SignUpPageState extends State<SignUpPage> {
   // Variables
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final _controller0 = TextEditingController();
   final _controller1 = TextEditingController();
   final _controller2 = TextEditingController();
   final _controller3 = TextEditingController();
   bool _isLoading = false;
 
   _signUp() async {
+    String name = _controller0.text;
     String email = _controller1.text;
     String password = _controller2.text;
     if (email.isEmpty || password.isEmpty) {
-      showSnackBar("Ënter valid Email or Password", "");
+      showSnackBar("Enter valid Email or Password", "fail", _scaffoldKey);
+    } else if (name.isEmpty) {
+      showSnackBar("Name is required", "fail", _scaffoldKey);
     } else {
       if (_controller2.text != _controller3.text) {
-        showSnackBar("Both password should be matched", "");
+        showSnackBar("Both password should be matched", "", _scaffoldKey);
       } else {
-        showHideLoading();
+        toggleLoading();
         var dio = Dio();
         try {
           Response response = await dio.post(
               'https://thesurvey.herokuapp.com/api/v1/user',
-              data: json.encode({"email": email, "password": password}));
-          showSnackBar("Account Created!!!😊😊😊", "success");
-          Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => LoginPage()));
-          showHideLoading();
+              data: json.encode(
+                  {"username": name, "email": email, "password": password}));
+          showSnackBar("Account Created!!!😊😊😊", "success", _scaffoldKey);
+          toggleLoading();
+          Timer(
+              Duration(seconds: 1),
+              () => Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => LoginPage())));
         } on DioError catch (e) {
-          showHideLoading();
+          toggleLoading();
           String errorMsg = e.response.data.toString();
-          showSnackBar(errorMsg, "fail");
+          showSnackBar(errorMsg, "fail", _scaffoldKey);
           print(errorMsg);
         }
       }
     }
   }
 
-  showHideLoading() {
+  toggleLoading() {
     setState(() {
       _isLoading = !_isLoading;
     });
   }
 
-  showSnackBar(String txt, String type) {
+  showSnackBar(String txt, String type, GlobalKey<ScaffoldState> contextKey) {
     final snackBar = SnackBar(
       content: Text(
         txt,
@@ -66,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
       backgroundColor: type == "success" ? Colors.green : primary,
     );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
+    contextKey.currentState.showSnackBar(snackBar);
   }
 
   Widget _generateTextFormField(
@@ -112,6 +121,10 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _generateTextFormField("Name", _controller0),
+            Container(
+              height: 10,
+            ),
             _generateTextFormField("Email", _controller1),
             // defaultHeight,
             Container(

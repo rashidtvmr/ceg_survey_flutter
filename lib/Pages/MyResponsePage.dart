@@ -13,6 +13,7 @@ class _MyResponsePageState extends State<MyResponsePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
           "My Response",
           style: defaultTextStyle,
@@ -23,7 +24,11 @@ class _MyResponsePageState extends State<MyResponsePage> {
       ),
       body: Container(
         child: Column(
-          children: [],
+          children: [
+            Center(
+              child: Text("No reponse yet😥"),
+            )
+          ],
         ),
       ),
     );

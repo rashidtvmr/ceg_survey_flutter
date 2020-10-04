@@ -2,24 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:Survey_App/models/typography.dart';
 
 class ExtraLargeButton extends StatelessWidget {
-  Function onTap;
-  String name;
-  Color color, textColor;
-  IconData icon;
+  final Function onTap;
+  final String name;
+  final Color color, textColor;
+  final IconData icon;
   ExtraLargeButton(
-      {Key key,
-      String name,
-      Color color,
-      Color textColor,
-      IconData icon,
-      Function onTap})
-      : super(key: key) {
-    this.name = name;
-    this.color = color;
-    this.icon = icon;
-    this.onTap = onTap;
-    this.textColor = textColor;
-  }
+      {Key key, this.name, this.color, this.textColor, this.icon, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,14 @@
+import 'dart:async';
+
+import 'package:Survey_App/models/app.dart';
 import 'package:Survey_App/models/typography.dart';
 import 'package:Survey_App/widget/MiniProgressBar.dart';
+import 'package:Survey_App/widget/SnackBarWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'dart:convert';
+
+import 'package:provider/provider.dart';
 // import 'htt';
 
 class LoginPage extends StatefulWidget {
@@ -74,30 +80,37 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _logMeIn() async {
+    FocusScope.of(context).requestFocus(FocusNode());
     String email = _controller1.text;
     String password = _controller2.text;
     if (email.isEmpty || password.isEmpty) {
       showSnackBar("Ënter valid Email or Password", "");
     } else {
-      showHideLoading();
+      toggleLoading();
       var dio = Dio();
       try {
         Response response = await dio.post(
             'https://thesurvey.herokuapp.com/api/v1/user/login',
             data: json.encode({"email": email, "password": password}));
-        showSnackBar("Logged in!!!😊😊😊", "success");
-        showHideLoading();
+        toggleLoading();
+        Provider.of<AppModel>(context, listen: false).authenticate(true);
+        Provider.of<AppModel>(context, listen: false)
+            .setAuthCode(response.data['token']);
+        Provider.of<AppModel>(context, listen: false)
+            .setName(response.data['name']);
+        showSnackBar('${response.data['msg']}😊😊😊', "success");
         print(response.data);
+        Timer(Duration(milliseconds: 600), () => Navigator.of(context).pop());
       } on DioError catch (e) {
-        showHideLoading();
-        String errorMsg = e.response.data.toString();
+        toggleLoading();
+        String errorMsg = e.response.data['msg'];
         showSnackBar(errorMsg, "fail");
         print(errorMsg);
       }
     }
   }
 
-  showHideLoading() {
+  toggleLoading() {
     setState(() {
       _isLoading = !_isLoading;
     });

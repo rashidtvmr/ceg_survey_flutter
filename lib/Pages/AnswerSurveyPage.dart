@@ -1,7 +1,9 @@
+import 'package:Survey_App/Pages/SurveyPage.dart';
+import 'package:Survey_App/models/app.dart';
 import 'package:Survey_App/models/typography.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'dart:convert';
+import 'package:provider/provider.dart';
 
 class AnswerSurveyPage extends StatefulWidget {
   AnswerSurveyPage({Key key}) : super(key: key);
@@ -13,12 +15,10 @@ class AnswerSurveyPage extends StatefulWidget {
 class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
   Future<List<dynamic>> getSurveys() async {
     try {
+      String url = Provider.of<AppModel>(context).getServerURL;
       Dio dio = new Dio();
-      var apiRespon =
-          await dio.get('https://thesurvey.herokuapp.com/api/v1/survey');
+      var apiRespon = await dio.get('$url/api/v1/survey/all');
       var apiResponJson = apiRespon.data;
-      print("MYyyyyyyyyyyyyyyyyyyyyyyyyy");
-      print(apiResponJson['data'].toList());
       return (apiResponJson['data']).toList();
     } on DioError catch (e) {
       if (e.response.statusCode == 404) {
@@ -27,7 +27,15 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
         print(e.message);
         print(e.request);
       }
+      return null;
     }
+  }
+
+  void goToSurveyPage(String sid) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (_) => SurveyPage(
+              sid: sid,
+            )));
   }
 
   Widget _generateGrid() {
@@ -35,31 +43,43 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
       future: getSurveys(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return Expanded(
+          return Container(
             child: GridView.builder(
               gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3),
               shrinkWrap: true,
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: EdgeInsets.all(2),
-                  color: getRandomColor(),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        snapshot.data[index]['title'],
-                        style: defaultTextStyle,
-                      ),
-                      Text(snapshot.data[index]['desc'])
-                    ],
+                return InkWell(
+                  onTap: () => goToSurveyPage(snapshot.data[index]["_id"]),
+                  child: Container(
+                    margin: EdgeInsets.all(2),
+                    padding: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: getRandomColor(),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 3,
+                            color: Colors.grey.withOpacity(.2),
+                            spreadRadius: 2,
+                            offset: Offset(4, 4))
+                      ],
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: primary, width: 3),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          snapshot.data[index]['surveyTitle'],
+                          style: defaultTextStyle,
+                        ),
+                        Text(snapshot.data[index]['surveyDesc'])
+                      ],
+                    ),
                   ),
                 );
-                // ListTile(
-                //   title: Text(snapshot.data[index]['title']),
-                //   subtitle: Text(snapshot.data[index]['desc']),
-                // );
               },
             ),
           );
@@ -68,7 +88,9 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
             child: CircularProgressIndicator(),
           );
         }
-        return CircularProgressIndicator();
+        return Center(
+          child: Text("No data 😥", style: defaultTextStyle),
+        );
       },
     );
     // return CircularProgressIndicator();

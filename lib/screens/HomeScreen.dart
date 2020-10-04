@@ -1,5 +1,3 @@
-import 'package:Survey_App/Pages/LoginPage.dart';
-import 'package:Survey_App/Pages/SingupPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../models/typography.dart';

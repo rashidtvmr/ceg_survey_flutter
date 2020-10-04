@@ -9,7 +9,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  Widget SearchBar() {
+  Widget searchBar() {
     return Stack(
       children: [
         Container(
@@ -44,7 +44,7 @@ class _SearchPageState extends State<SearchPage> {
             child: Text("Search Surveys", style: defaultTextStyle),
           ),
           defaultHeight,
-          SearchBar()
+          searchBar()
         ],
       ),
     );

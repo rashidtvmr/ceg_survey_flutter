@@ -10,45 +10,6 @@ class AboutUSPage extends StatefulWidget {
 }
 
 class _AboutUSPageState extends State<AboutUSPage> {
-  Future<void> _launchInWebViewOrVC(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        headers: <String, String>{'my_header_key': 'my_header_value'},
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  Future<void> _launchInWebViewWithJavaScript(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        enableJavaScript: true,
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  Future<void> _launchInWebViewWithDomStorage(String url) async {
-    if (await canLaunch(url)) {
-      await launch(
-        url,
-        forceSafariVC: true,
-        forceWebView: true,
-        enableDomStorage: true,
-      );
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   Widget _listItem(String name, String email) {
     String toLaunch = "mailto:" + email + "?subject=From Survey App";
     return Container(
@@ -97,6 +58,7 @@ class _AboutUSPageState extends State<AboutUSPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: Text(
           "About",
           style: defaultTextStyle,
@@ -105,7 +67,7 @@ class _AboutUSPageState extends State<AboutUSPage> {
         centerTitle: true,
         iconTheme: IconThemeData(color: primary),
       ),
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

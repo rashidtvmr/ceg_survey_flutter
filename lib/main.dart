@@ -1,6 +1,6 @@
-import 'package:Survey_App/models/app.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:Survey_App/models/app.dart';
 
 // import './screens/SplashScreen.dart';
 import './screens/HomeScreen.dart';
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return Provider<AppModel>(
+    return ChangeNotifierProvider(
       create: (context) => AppModel(),
       child: MaterialApp(
         title: 'Survey App',
