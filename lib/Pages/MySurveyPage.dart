@@ -64,7 +64,7 @@ class _MySurveyPageState extends State<MySurveyPage> {
                           spreadRadius: 2,
                           offset: Offset(4, 4))
                     ],
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     border: Border.all(color: primary, width: 3),
                   ),
                   child: Column(

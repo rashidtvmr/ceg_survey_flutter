@@ -33,7 +33,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
       String fieldLabel, TextInputType type, TextEditingController controller) {
     return Material(
       elevation: 2,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(5),
       child: TextFormField(
         controller: controller,
         maxLines: type == TextInputType.multiline ? 3 : 1,
@@ -41,7 +41,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
           labelText: fieldLabel,
           fillColor: Colors.white,
           border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(10.0),
+            borderRadius: new BorderRadius.circular(5.0),
           ),
         ),
         keyboardType: TextInputType.text,
@@ -154,7 +154,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 2.5, color: primary),
         ),
         child: Text(_selectedFieldType.toString().split('.')[1]),
@@ -218,7 +218,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     border: Border.all(width: 2.5, color: primary),
                   ),
                   child: Column(
@@ -258,7 +258,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                   height: 440,
                   padding: EdgeInsets.only(top: 5, bottom: 5),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     border: Border.all(width: 2.5, color: primary),
                   ),
                   child: SingleChildScrollView(
@@ -283,7 +283,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                         children: [
                           RaisedButton(
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(5.0),
                               // side: BorderSide(color: Colors.red),
                             ),
                             elevation: 3,
@@ -298,7 +298,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                           dForm.formList.length != 0
                               ? RaisedButton(
                                   shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
+                                    borderRadius: BorderRadius.circular(5.0),
                                     // side: BorderSide(color: Colors.red),
                                   ),
                                   elevation: 3,
@@ -314,7 +314,7 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                       ),
                       RaisedButton(
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(5.0),
                           // side: BorderSide(color: Colors.red),
                         ),
                         elevation: 3,

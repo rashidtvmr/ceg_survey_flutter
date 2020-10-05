@@ -54,7 +54,7 @@ class ExtraLargeButton extends StatelessWidget {
                   color: Colors.black.withOpacity(.38),
                   spreadRadius: 1)
             ],
-            borderRadius: BorderRadius.circular(10)),
+            borderRadius: BorderRadius.circular(5)),
       ),
     );
   }

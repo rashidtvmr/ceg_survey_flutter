@@ -159,8 +159,7 @@ class _MainPageState extends State<MainPage> {
         context: context,
         child: AlertDialog(
           title: Text("Do you want to exit?"),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           actions: [
             FlatButton(
               child: Text("No"),
@@ -170,7 +169,7 @@ class _MainPageState extends State<MainPage> {
               color: primary,
               child: Text("Yes"),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(5)),
               onPressed: () => SystemNavigator.pop(),
             ),
           ],

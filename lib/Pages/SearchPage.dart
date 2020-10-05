@@ -19,7 +19,7 @@ class _SearchPageState extends State<SearchPage> {
                 labelText: "Search",
                 fillColor: Colors.white,
                 border: new OutlineInputBorder(
-                  borderRadius: new BorderRadius.circular(10.0),
+                  borderRadius: new BorderRadius.circular(5.0),
                 ),
                 suffixIcon:
                     IconButton(icon: Icon(Icons.search), onPressed: () => {})),

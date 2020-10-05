@@ -5,7 +5,6 @@ import 'package:Survey_App/models/typography.dart';
 import 'package:Survey_App/widget/FieldCountLabel.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:provider/provider.dart';
 
@@ -44,6 +43,11 @@ class FormModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setFieldType(int index, String value) {
+    this.popupMenuButtonList[index] = value;
+    notifyListeners();
+  }
+
   Widget _generatePopupMenuButton(int lCount) {
     int localCount = lCount;
     popupMenuButtonList[localCount] = "Text";
@@ -52,20 +56,32 @@ class FormModel extends ChangeNotifier {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 2.5, color: primary),
         ),
-        child: Text(getFieldType(localCount)),
+        child: Consumer<FormModel>(
+          builder: (context, dForm, child) => Text(
+            dForm.popupMenuButtonList[lCount],
+          ),
+        ),
       ),
       onSelected: (String result) {
-        print("lc$localCount");
-        popupMenuButtonList[localCount] = result;
+        // popupMenuButtonList[localCount] = result;
+        setFieldType(localCount, result);
         // notifyListeners();
       },
       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
         const PopupMenuItem<String>(
           value: "Text",
           child: Text('Text'),
+        ),
+        const PopupMenuItem<String>(
+          value: "Paragraph",
+          child: Text('Paragraph'),
+        ),
+        const PopupMenuItem<String>(
+          value: "Date",
+          child: Text('Date'),
         ),
         const PopupMenuItem<String>(
           value: "Number",
@@ -87,7 +103,7 @@ class FormModel extends ChangeNotifier {
       String fieldLabel, TextInputType type, TextEditingController controller) {
     return Material(
       elevation: 2,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(5),
       child: TextFormField(
         controller: controller,
         maxLines: type == TextInputType.multiline ? 3 : 1,
@@ -95,7 +111,7 @@ class FormModel extends ChangeNotifier {
           labelText: fieldLabel,
           fillColor: Colors.white,
           border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(10.0),
+            borderRadius: new BorderRadius.circular(5.0),
           ),
         ),
         keyboardType: TextInputType.text,
@@ -110,7 +126,7 @@ class FormModel extends ChangeNotifier {
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           margin: EdgeInsets.only(top: 10, bottom: 2, right: 10, left: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5.0),
             border: Border.all(width: 2.5, color: primary),
           ),
           child: Column(
@@ -127,7 +143,7 @@ class FormModel extends ChangeNotifier {
                     style: defaultTextStyle,
                   ),
                   defaultWidth,
-                  _generatePopupMenuButton(count)
+                  _generatePopupMenuButton(count),
                 ],
               )
             ],
@@ -201,8 +217,6 @@ class FormModel extends ChangeNotifier {
   Future<void> clearFields() async {
     this.formData = {};
     this.formList.clear();
-    this.setSurveyTitle("");
-    this.setSurveyDesc("");
     notifyListeners();
   }
 

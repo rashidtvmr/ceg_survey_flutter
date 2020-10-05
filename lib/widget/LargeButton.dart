@@ -22,7 +22,7 @@ class LargeButton extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(5),
               boxShadow: [
                 BoxShadow(
                     blurRadius: 5, color: Colors.black12, offset: Offset(1, 1))

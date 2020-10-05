@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
       String fieldLabel, TextEditingController controller) {
     return Material(
       elevation: 2,
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(5),
       child: TextFormField(
         controller: controller,
         obscureText: fieldLabel == "Password" ? true : false,
@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
           labelText: fieldLabel,
           fillColor: Colors.white,
           border: new OutlineInputBorder(
-            borderRadius: new BorderRadius.circular(10.0),
+            borderRadius: new BorderRadius.circular(5.0),
             // borderSide: new BorderSide(),
           ),
         ),
@@ -50,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
     return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         title: Text(
           "Enter email to send reset password link.",
           style: TextStyle(fontSize: 15),
@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
           RaisedButton(
             color: primary,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             child: Text(
               "Reset",
               style: TextStyle(color: Colors.white),
@@ -165,7 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 RaisedButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(5.0),
                       // side: BorderSide(color: Colors.red),
                     ),
                     elevation: 5,

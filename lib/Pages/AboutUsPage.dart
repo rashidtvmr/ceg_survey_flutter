@@ -25,7 +25,7 @@ class _AboutUSPageState extends State<AboutUSPage> {
                 spreadRadius: 1)
           ],
           border: Border.all(color: primary, width: 2),
-          borderRadius: BorderRadius.circular(10)),
+          borderRadius: BorderRadius.circular(5)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -82,7 +82,7 @@ class _AboutUSPageState extends State<AboutUSPage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(5),
                   border: Border.all(color: primary, width: 2)),
               child: Column(
                 children: [

@@ -31,10 +31,10 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
     }
   }
 
-  void goToSurveyPage(String sid) {
+  void goToSurveyPage(var sInfo) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (_) => SurveyPage(
-              sid: sid,
+              sInfo: sInfo,
             )));
   }
 
@@ -51,7 +51,7 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return InkWell(
-                  onTap: () => goToSurveyPage(snapshot.data[index]["_id"]),
+                  onTap: () => goToSurveyPage(snapshot.data[index]),
                   child: Container(
                     margin: EdgeInsets.all(2),
                     padding: EdgeInsets.all(5),
@@ -64,7 +64,7 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
                             spreadRadius: 2,
                             offset: Offset(4, 4))
                       ],
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: primary, width: 3),
                     ),
                     child: Column(
@@ -74,8 +74,14 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
                         Text(
                           snapshot.data[index]['surveyTitle'],
                           style: defaultTextStyle,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
                         ),
-                        Text(snapshot.data[index]['surveyDesc'])
+                        Text(
+                          snapshot.data[index]['surveyDesc'],
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                        )
                       ],
                     ),
                   ),

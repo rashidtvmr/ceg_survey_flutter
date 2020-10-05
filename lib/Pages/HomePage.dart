@@ -49,7 +49,7 @@ class _HomePageState extends State<HomePage> {
       context: context,
       child: AlertDialog(
         title: Text(showText),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
         actions: [
           FlatButton(
             child: Text("Cancel"),
@@ -59,7 +59,7 @@ class _HomePageState extends State<HomePage> {
             color: primary,
             child: Text("Login"),
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
             onPressed: () {
               Navigator.of(context).pop();
               Timer(

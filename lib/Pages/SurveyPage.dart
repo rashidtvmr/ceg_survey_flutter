@@ -1,12 +1,22 @@
+import 'dart:collection';
+import 'dart:convert';
+
+import 'package:Survey_App/models/Form.dart';
+import 'package:Survey_App/models/typography.dart';
+import 'package:Survey_App/widget/MiniProgressBar.dart';
+import 'package:Survey_App/widget/SnackBarWidget.dart';
+
+import 'package:provider/provider.dart';
+import 'package:Survey_App/models/ParseForm.dart';
 import 'package:Survey_App/models/app.dart';
 import 'package:Survey_App/models/typography.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 
 class SurveyPage extends StatefulWidget {
-  String sid = "";
-  SurveyPage({Key key, this.sid}) : super(key: key);
+  var sInfo;
+  SurveyPage({Key key, this.sInfo}) : super(key: key);
 
   @override
   _SurveyPageState createState() => _SurveyPageState();
@@ -14,74 +24,105 @@ class SurveyPage extends StatefulWidget {
 
 class _SurveyPageState extends State<SurveyPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  String appBarTitle = "Loading...";
-  bool _isLoading = true;
-
-  showSnackBar(String txt, String type) {
-    final snackBar = SnackBar(
-      content: Text(
-        txt,
-        style: TextStyle(
-            color: type == "success" ? Colors.white : Colors.white,
-            fontSize: 20),
-      ),
-      backgroundColor: type == "success" ? Colors.green : primary,
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
-
-  toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
-
-  Future<String> getSurvey(BuildContext context, String sid) async {
-    String url = Provider.of<AppModel>(context).getServerURL;
-    Dio dio = new Dio();
-    try {
-      var response = await dio.get("$url/api/v1/survey/$sid");
-      var apiResponJson = response.data;
-      print(apiResponJson['data']);
-      return (apiResponJson['data']);
-    } on DioError catch (e) {
-      // toggleLoading();
-      print(e);
-      String errorMsg = e.response.data.toString();
-      showSnackBar(errorMsg, "fail");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: _scaffoldKey,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: primary),
-        title: Text(appBarTitle, style: defaultTextStyle),
-      ),
-      body: Container(
-        child: FutureBuilder<String>(
-          future: getSurvey(context, widget.sid),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
-            print("bp 1:${snapshot.hasData}");
-            if (snapshot.hasData) {
-              print("lkabdafsikd${snapshot.data}");
-              return Container(
-                child: Container(child: Text(snapshot.data)),
-              );
-            } else if (snapshot.data == null) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return Center(
-              child: Text("No data 😥", style: defaultTextStyle),
-            );
-          },
+    final _scaffoldKey = GlobalKey<ScaffoldState>();
+    String appBarTitle = "Loading...";
+
+    return ChangeNotifierProvider(
+      create: (context) => ParseForm(),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: AppBar(
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          iconTheme: IconThemeData(color: primary),
+          title: Text(widget.sInfo['surveyTitle'], style: defaultTextStyle),
+        ),
+        body: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(left: 10, top: 5, right: 10),
+            decoration: BoxDecoration(),
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Title",
+                  style: boldFont,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  child: Text(widget.sInfo['surveyTitle']),
+                ),
+                Text(
+                  "Description",
+                  style: boldFont,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                  child: Text(widget.sInfo['surveyDesc']),
+                ),
+                Text(
+                  "Share your response",
+                  style: boldFont,
+                ),
+                Consumer<ParseForm>(
+                    builder: (context, dForm, child) => Column(children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children:
+                                dForm.generateForm(widget.sInfo['fields']),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  RaisedButton(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                      // side: BorderSide(color: Colors.red),
+                                    ),
+                                    onPressed: () =>
+                                        Navigator.of(context).pop(),
+                                    color: Colors.red[500],
+                                    child: Text("Cancel",
+                                        style: TextStyle(color: Colors.white)),
+                                  ),
+                                  minWidth,
+                                  FlatButton(
+                                    onPressed: dForm.clearFields,
+                                    child: Text("Clear"),
+                                  ),
+                                ],
+                              ),
+                              RaisedButton(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                  // side: BorderSide(color: Colors.red),
+                                ),
+                                color: primary,
+                                onPressed: () async {
+                                  var isSubmitted = await dForm.submitSurvey();
+                                  if (isSubmitted == "success") {
+                                    SnackBarWidget(
+                                        isSubmitted, "success", _scaffoldKey);
+                                  } else
+                                    SnackBarWidget(
+                                        isSubmitted, "fail", _scaffoldKey);
+                                },
+                                child: Text("Submit",
+                                    style: TextStyle(color: Colors.white)),
+                              ),
+                            ],
+                          )
+                        ])),
+              ],
+            ),
+          ),
         ),
       ),
     );
