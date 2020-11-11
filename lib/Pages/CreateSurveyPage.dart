@@ -327,6 +327,8 @@ class _CreateSurveyPageState extends State<CreateSurveyPage> {
                           var isSurveyPublished =
                               await dForm.publishSurvey(context);
                           if (isSurveyPublished == "success") {
+                            _surveyTitleController.text = "";
+                            _surveyDescController.text = "";
                             showSnackBar(
                                 "Survey published successfully", "success");
                           } else {

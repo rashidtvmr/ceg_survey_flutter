@@ -16,6 +16,7 @@ class FormModel extends ChangeNotifier {
   int count = 0;
   String surveyTitle = "";
   String surveyDesc = "";
+  bool isSwitched = false;
   bool isPublic = true;
   List<Widget> formList = <Widget>[];
   var textEditingControllerList = {};
@@ -51,7 +52,6 @@ class FormModel extends ChangeNotifier {
   Widget _generatePopupMenuButton(int lCount) {
     int localCount = lCount;
     popupMenuButtonList[localCount] = "Text";
-
     return PopupMenuButton<String>(
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
@@ -142,8 +142,21 @@ class FormModel extends ChangeNotifier {
                     "Field type",
                     style: defaultTextStyle,
                   ),
-                  defaultWidth,
+                  minWidth,
                   _generatePopupMenuButton(count),
+                  minWidth,
+                  Text(
+                    "Required",
+                    style: defaultTextStyle,
+                  ),
+                  Switch(
+                    value: !this.isSwitched,
+                    onChanged: (value) {
+                      isSwitched = value;
+                    },
+                    activeTrackColor: Colors.lightBlue,
+                    activeColor: primary,
+                  ),
                 ],
               )
             ],

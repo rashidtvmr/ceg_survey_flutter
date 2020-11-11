@@ -32,10 +32,13 @@ class _AnswerSurveyPageState extends State<AnswerSurveyPage> {
   }
 
   void goToSurveyPage(var sInfo) {
-    Navigator.of(context).push(MaterialPageRoute(
+    Navigator.of(context).push(
+      MaterialPageRoute(
         builder: (_) => SurveyPage(
-              sInfo: sInfo,
-            )));
+          sInfo: sInfo,
+        ),
+      ),
+    );
   }
 
   Widget _generateGrid() {

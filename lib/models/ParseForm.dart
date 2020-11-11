@@ -1,6 +1,11 @@
 import 'package:Survey_App/models/typography.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:provider/provider.dart';
+
+import 'dart:convert';
+import 'app.dart';
 
 class ParseForm extends ChangeNotifier {
   bool isLoading = true;
@@ -13,7 +18,7 @@ class ParseForm extends ChangeNotifier {
   String get getSureveyId => surveyId;
   void setSurveyId(String sid) {
     this.surveyId = sid;
-    notifyListeners();
+    // notifyListeners();
   }
 
   Widget _generateTextFormField(
@@ -81,28 +86,49 @@ class ParseForm extends ChangeNotifier {
     return widgetList;
   }
 
-  Future clearFields() {
+  clearFields() {
+    formData.clear();
     for (int i = 0; i < textEditingControllerList.length; i++) {
       print(textEditingControllerList[i].text = "");
     }
   }
 
-  Future<String> submitSurvey() async {
+  Future<String> submitSurvey(BuildContext context) async {
     String isValid = validateFields();
+    formData.clear();
     for (int i = 0; i < textEditingControllerList.length; i++) {
       formData.add(
           {"fieldCount": i, "response": textEditingControllerList[i].text});
       // print(textEditingControllerList[i].text);
-      print(fieldTemplate);
-      print("fTemp:${formData[i]}");
+      // print("fTemp:${formData[i]}");
     }
     if (isValid == "success") {
-      for (int i = 0; i < textEditingControllerList.length; i++) {
-        print(textEditingControllerList[i].text);
-      }
-      return "success";
+      // for (int i = 0; i < textEditingControllerList.length; i++) {
+      //   print(textEditingControllerList[i].text);
+      // }
+      var body = {"surveyId": this.surveyId, "data": formData};
+      return await postResponse(context, body);
     } else
       return isValid;
+  }
+
+  Future postResponse(BuildContext context, var body) async {
+    var url = Provider.of<AppModel>(context, listen: false).getServerURL;
+    Dio dio = new Dio();
+    try {
+      Response response = await dio.post(
+        "$url/api/v1/response",
+        data: json.encode(body),
+      );
+      clearFields();
+      print(response);
+      return "success";
+    } on DioError catch (e) {
+      // await clearFields();
+      print("Errrrrrrr:${e}");
+      String errorMsg = e.response.toString();
+      return errorMsg;
+    }
   }
 
   String validateFields() {
